@@ -1,18 +1,15 @@
+'use strict';
+const express = require('express');
 const Helpers = require('./server/utilities/Helpers');
-const http = require('http');
+const app = express();
 
-const hostname = '127.0.0.1';
-const port = 3000;
+require('./server/routes/mutation')(app);
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World\n');
+app.listen(3002, () => {
+    console.log('Nodemon is running the app on PORT:', 3002);
 });
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+// module.exports = app;
 
 const noMutation = ['A T G C G A', 'C A G T G C', 'T T A T T T', 'A G A C G G', 'G C G T C A', 'T C A C T G'];
 const mutation = ['A T G C G A', 'C A G T G C', 'T T A T G T', 'A G A A G G', 'C C C C T A', 'T C A C T G'];
