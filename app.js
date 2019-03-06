@@ -4,13 +4,10 @@ module.exports = {
 };
 
 function adnSequence() {
-    const sequence = ['A T G C G A', 'C A G T G C', 'T T A T T T', 'A G A C G G', 'G C G T C A', 'T C A C T G'];
+    const noMutation = ['A T G C G A', 'C A G T G C', 'T T A T T T', 'A G A C G G', 'G C G T C A', 'T C A C T G'];
     const mutation = ['A T G C G A', 'C A G T G C', 'T T A T G T', 'A G A A G G', 'C C C C T A', 'T C A C T G'];
-    return mutation.map(adn => {
-        console.log('ADN', adn);
-        console.log(hasHorizontalMutation(adn));
-        return adn;
-    });
+    const results = noMutation.map(sequence => hasMutation(sequence));
+    return results.indexOf(true) > -1;
 }
 
 function hasHorizontalMutation(adn) {
@@ -19,25 +16,36 @@ function hasHorizontalMutation(adn) {
     const adn3 = 'ACCCCG';
     const adn4 = 'TTATGT';
     const adn5 = 'AGAAGG';
+    const adn6 = 'TTATTT';
     let counter = 0;
-    let occurrenceIndex;
-    return adn5.replace(/ /g,'').split('').reduce((acc, character, index, array) => {
-        console.log('----', index);
-        if(array[index] === array[index + 1] || array[index] === array[occurrenceIndex]) {
-            console.log('array[index]', array[index]);
-            console.log('array[index + 1]', array[index + 1]);
-            console.log('array[occurrenceIndex]', array[occurrenceIndex]);
+    return adn6.replace(/ /g,'').split('').reduce((acc, character, index, array) => {
+        if (array[index] === array[index + 1]) {
             counter++;
-            occurrenceIndex = index;
         } else {
-            occurrenceIndex = 'undefined';
+
         }
 
-        console.log('counter', counter);
         if(index === array.length - 1) {
             return counter;
         }
     }, 0)
 }
 
-console.log(hasHorizontalMutation());
+/**
+ * Identifies if a sequence has four consecutive characters 'a mutation'
+ * @param sequence
+ * @returns {any[]}
+ */
+function hasMutation(sequence) {
+    const adn1 = 'CCCCTA';
+    const groupCharacters = sequence.replace(/ /g,'').match(/([a-zA-Z])\1*/g)||[];
+    const result = groupCharacters.map(function(itm){
+        return [itm.charAt(0), itm.length];
+    }).reduce((acc, data) => {
+        return acc.concat(data);
+    });
+
+    return result.indexOf(4) > -1;
+}
+
+console.log(adnSequence());
