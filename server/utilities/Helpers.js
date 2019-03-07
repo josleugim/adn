@@ -30,3 +30,43 @@ exports.hasMutation = data => {
             .catch(err => console.error(err));
     })
 };
+
+exports.verticalToHorizontal = (matrix) => {
+    return new Promise(async (resolve, reject) => {
+        const newArray = [];
+        let row1 = '';
+        let row2 = '';
+        let row3 = '';
+        let row4 = '';
+        let row5 = '';
+        let row6 = '';
+        const horizontal = await matrix.map((sequence, index, array) => {
+            console.log(sequence);
+            row1 = row1 + returnChar(sequence, 0);
+            row2 = row2 + returnChar(sequence, 1);
+            row3 = row3 + returnChar(sequence, 2);
+            row4 = row4 + returnChar(sequence, 3);
+            row5 = row5 + returnChar(sequence, 4);
+            row6 = row6 + returnChar(sequence, 5);
+
+            if (index === array.length - 1) {
+                newArray.push(row1);
+                newArray.push(row2);
+                newArray.push(row3);
+                newArray.push(row4);
+                newArray.push(row5);
+                newArray.push(row6);
+                return newArray;
+            }
+        });
+        resolve(horizontal);
+    });
+
+    function returnChar(sequence, index) {
+        return sequence.split('').filter((char, i) => {
+            if(i === index) {
+                return char;
+            }
+        })
+    }
+};

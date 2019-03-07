@@ -3,9 +3,19 @@
 const Helpers = require('../utilities/Helpers');
 
 exports.post = (req, res) => {
-    Helpers.hasMutation()
-        .then(sendResponse)
-        .catch(err => console.error(err));
+    if(req.body.dna) {
+        Helpers.verticalToHorizontal(req.body.dna)
+            .then(result => {
+                console.log('result', result);
+            })
+            .catch();
+        Helpers.hasMutation(req.body.dna)
+            .then(sendResponse)
+            .catch(err => console.error(err));
+    } else {
+        sendResponse();
+    }
+
 
     function sendResponse(result) {
         if (typeof result !== 'undefined') {
@@ -20,7 +30,8 @@ exports.post = (req, res) => {
                 resData.success = false;
                 res.status(300).json(resData);
             }
+        } else {
+            res.status(300).json({success: false});
         }
     }
-    res.status(200);
 };
