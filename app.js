@@ -15,7 +15,8 @@ app.listen(3002, () => {
 
 // module.exports = app;
 
-const noMutation = ['A T G C G A', 'C A G T G C', 'T T A T T T', 'A G A C G G', 'G C G T C A', 'T C A C T G'];
+/*
+const noMutation = ["A T G C G A", "C A G T G C", "T T A T T T", "A G A C G G", "G C G T C A", "T C A C T G"];
 const mutation = ['A T G C G A', 'C A G T G C', 'T T A T G T', 'A G A A G G', 'C C C C T A', 'T C A C T G'];
 Helpers.hasMutation(mutation)
-.then(result => console.log(result));
+.then(result => console.log(result));*/

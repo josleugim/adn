@@ -4,13 +4,19 @@ const Helpers = require('../utilities/Helpers');
 
 exports.post = (req, res) => {
     if(req.body.dna) {
-        Helpers.verticalToHorizontal(req.body.dna)
-            .then(result => {
-                console.log('result', result);
+        Helpers.sanitize(req.body.dna)
+            .then(Helpers.hasMutation)
+            .then(res => {
+                if(!res) {
+                    return Helpers.sanitize(req.body.dna)
+                        .then(Helpers.verticalToHorizontal)
+                        .then(Helpers.hasMutation)
+                        .catch(err => console.error(err));
+                } else {
+                    return res;
+                }
             })
-            .catch();
-        Helpers.hasMutation(req.body.dna)
-            .then(sendResponse)
+            .then(res => sendResponse(res))
             .catch(err => console.error(err));
     } else {
         sendResponse();

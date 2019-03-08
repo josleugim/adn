@@ -1,4 +1,9 @@
-exports.hasMutation = data => {
+/**
+ * Evaluates if the sequences han a mutation
+ * @param matrix
+ * @returns {Promise<any>}
+ */
+exports.hasMutation = matrix => {
     return new Promise(resolve => {
         let countOccurrences = (sequences) => {
             return new Promise(resolve => {
@@ -25,12 +30,17 @@ exports.hasMutation = data => {
             })
         }
 
-        countOccurrences(data)
+        countOccurrences(matrix)
             .then(result => resolve(result))
             .catch(err => console.error(err));
     })
 };
 
+/**
+ * Convert the columns to rows so the hasMutation function can determine if has a mutation
+ * @param matrix
+ * @returns {Promise<any>}
+ */
 exports.verticalToHorizontal = (matrix) => {
     return new Promise(async (resolve, reject) => {
         const newArray = [];
@@ -41,7 +51,6 @@ exports.verticalToHorizontal = (matrix) => {
         let row5 = '';
         let row6 = '';
         const horizontal = await matrix.map((sequence, index, array) => {
-            console.log(sequence);
             row1 = row1 + returnChar(sequence, 0);
             row2 = row2 + returnChar(sequence, 1);
             row3 = row3 + returnChar(sequence, 2);
@@ -59,7 +68,7 @@ exports.verticalToHorizontal = (matrix) => {
                 return newArray;
             }
         });
-        resolve(horizontal);
+        resolve(horizontal[5]);
     });
 
     function returnChar(sequence, index) {
@@ -69,4 +78,17 @@ exports.verticalToHorizontal = (matrix) => {
             }
         })
     }
+};
+
+exports.diagonalToHorizontal = matrix => {
+
+};
+
+/**
+ * Cleans the blank spaces
+ * @param matrix
+ * @returns {Promise<void>}
+ */
+exports.sanitize = async (matrix) => {
+    return await matrix.map(sequence => sequence.replace(/ /g, ''));
 };
