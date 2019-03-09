@@ -68,6 +68,7 @@ exports.verticalToHorizontal = (matrix) => {
                 return newArray;
             }
         });
+
         resolve(horizontal[5]);
     });
 
@@ -80,8 +81,46 @@ exports.verticalToHorizontal = (matrix) => {
     }
 };
 
-exports.diagonalToHorizontal = matrix => {
+exports.diagonalToHorizontal = async matrix => {
+    const diagonal = [];
+    let row1 = '';
+    let row2 = '';
+    let row3 = '';
+    let row4 = '';
+    let row5 = '';
+    const newMatrix = await matrix.reduce((acc, sequence, index) => {
+        acc.push(sequence.split(''));
+        return acc;
+    }, []);
+    newMatrix.map((sequence, index) => {
+        sequence.map((character, i) => {
+            if(index === i) {
+                row3 = row3 + newMatrix[index][i];
+            }
+            if(i === index + 1) {
+                row1 = row1 + newMatrix[index][index + 1];
+            }
 
+            if(i === index - 1) {
+                row2 = row2 + newMatrix[index][index - 1];
+            }
+
+            if(i === index + 2) {
+                row4 = row4 + newMatrix[index][index + 2];
+            }
+
+            if(i === index - 2) {
+                row5 = row5 + newMatrix[index][index - 2];
+            }
+        });
+    });
+
+    diagonal.push(row1);
+    diagonal.push(row2);
+    diagonal.push(row3);
+    diagonal.push(row4);
+    diagonal.push(row5);
+    return diagonal;
 };
 
 /**

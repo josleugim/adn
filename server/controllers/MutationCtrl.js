@@ -16,7 +16,17 @@ exports.post = (req, res) => {
                     return res;
                 }
             })
-            .then(res => sendResponse(res))
+            .then(res => {
+                if(!res) {
+                    return Helpers.sanitize(req.body.dna)
+                        .then(Helpers.diagonalToHorizontal)
+                        .then(Helpers.hasMutation)
+                        .catch(err => console.error(err));
+                } else {
+                    return res;
+                }
+            })
+            .then(sendResponse)
             .catch(err => console.error(err));
     } else {
         sendResponse();
@@ -34,10 +44,10 @@ exports.post = (req, res) => {
                 res.status(200).json(resData);
             } else {
                 resData.success = false;
-                res.status(300).json(resData);
+                res.status(403).json(resData);
             }
         } else {
-            res.status(300).json({success: false});
+            res.status(403).json({success: false});
         }
     }
 };
