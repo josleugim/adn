@@ -17,6 +17,19 @@ exports.save = async stat => {
 };
 
 exports.read = async () => {
-    const snapshot = await admin.firestore().collection('stats').get();
-    return snapshot.docs.map(doc => doc.data());
+    const statsRef = await admin.firestore().collection('stats');
+    const mutationQuery = await statsRef.where('hasMutation', '==', true);
+    const noMutationQuery = await statsRef.where('hasMutation', '==', false);
+    const mutationSnapshot = await mutationQuery.get().then(snap => snap.size);
+    const noMutationSnapshot = await noMutationQuery.get().then(snap => snap.size);
+
+    return {
+        count_mutations: mutationSnapshot,
+        count_no_mutations: noMutationSnapshot,
+        ratio: mutationSnapshot/noMutationSnapshot
+    }
+    /*const snapshot = await admin.firestore().collection('stats').get();
+    return snapshot.docs.map(doc => {
+        return doc.data()
+    });*/
 };
