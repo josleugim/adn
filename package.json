@@ -1,0 +1,27 @@
+{
+  "name": "adn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test/* --reporter spec",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josleugim/adn.git"
+  },
+  "author": "mordekaiser",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josleugim/adn/issues"
+  },
+  "homepage": "https://github.com/josleugim/adn#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "mocha": "^6.0.2"
+  }
+}
