@@ -9,8 +9,8 @@ app.use(bodyParser.json());
 
 require('./server/routes/mutation')(app);
 
-app.listen(3002, () => {
-    console.log('Nodemon is running the app on PORT:', 3002);
+app.listen(8080, () => {
+    console.log('Nodemon is running the app on PORT:', 8080);
 });
 
 // module.exports = app;
