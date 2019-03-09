@@ -1,5 +1,5 @@
 'use strict';
-
+const FirestoreService = require('../utilities/Firestore.service');
 const Helpers = require('../utilities/Helpers');
 
 exports.post = (req, res) => {
@@ -35,6 +35,13 @@ exports.post = (req, res) => {
 
     function sendResponse(result) {
         if (typeof result !== 'undefined') {
+            const statData = {
+                hasMutation: result,
+                adn: req.body.dna
+            };
+
+            FirestoreService.save(statData);
+
             const resData = {
                 success: true,
                 data: result
